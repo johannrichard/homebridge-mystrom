@@ -5,9 +5,8 @@ var pollingtoevent = require('polling-to-event');
 module.exports = function(homebridge){
 	Service = homebridge.hap.Service;
 	Characteristic = homebridge.hap.Characteristic;
-	homebridge.registerAccessory("homebridge-mystrom", "myStrom", myStromAccessory);
+	homebridge.registerAccessory("homebridge-mystrom", "MyStrom", myStromAccessory);
 }
-
 
 function myStromAccessory(log, config) {
   this.log = log;
@@ -46,8 +45,8 @@ function myStromAccessory(log, config) {
 			
 			if (that.outletService ) {
 				that.outletService.getCharacteristic(Characteristic.On)
-				.setValue(that.state)
-				.getCharacteristic(Characteristic.OutletInUse)
+				.setValue(that.state);
+				that.outletService.getCharacteristic(Characteristic.OutletInUse)
 				.setValue(that.inUse);
 			}
     });
@@ -106,11 +105,11 @@ myStromAccessory.prototype = {
     .setCharacteristic(Characteristic.SerialNumber, "HTTP Serial Number");
 
 	this.outletService = new Service.Outlet(this.name);			
-	this.outletServiceswitchService
+	this.outletService
 	 .getCharacteristic(Characteristic.On)
 	 .on('get', function(callback) {callback(null, that.state)})
-	 .on('set', this.setPowerState.bind(this))
-	 .getCharacteristic(Characteristic.OutletInUse)
+	 .on('set', this.setPowerState.bind(this));
+	this.outletService.getCharacteristic(Characteristic.OutletInUse)
 	 .on('get', function(callback) {callback(null, that.inUse)});
 	return [this.outletService];
   }
