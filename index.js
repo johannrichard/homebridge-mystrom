@@ -244,8 +244,6 @@ HttpAdvancedAccessory.prototype = {
 
 	switch (this.service) {
 	case "Switch":
-		
-
 		if (this.switchHandling == "yes") {
 			this.switchService = new Service.Switch(this.name);			
 			this.switchService
@@ -263,7 +261,25 @@ HttpAdvancedAccessory.prototype = {
 		     	return [switchService];
 		}
         	break;
-	case "Light":
+	case "Outlet":
+		if (this.switchHandling == "yes") {
+			this.outletService = new Service.Outlet(this.name);			
+			this.outletService
+
+			.getCharacteristic(Characteristic.On)
+			.on('get', function(callback) {callback(null, that.state)})
+			.on('set', this.setPowerState.bind(this));
+			return [this.outletService];
+			break;
+		} else {
+			var outletService = new Service.Outlet(this.name);
+			outletService
+			.getCharacteristic(Characteristic.On)	
+			.on('set', this.setPowerState.bind(this));
+		     	return [outletService];
+		}
+        	break;
+        case "Light":
 		var lightbulbService = new Service.Lightbulb(this.name);
 
 		if (this.switchHandling == "yes") {
