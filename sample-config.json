@@ -10,7 +10,7 @@
 
     "accessories": [ 
         {
-            "accessory": "myStrom",
+            "accessory": "MyStrom",
             "name": "myStrom WLAN Energy Control Switch",
             "switch_address": "192.168.1.42"
         } 
