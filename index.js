@@ -41,7 +41,7 @@ function myStromAccessory(log, config) {
 
 	        that.state = relay;
 	        that.inUse = power > 0;
-			that.log(that.service, "received data from url:"+that.status_url, "state is currently", data.toString()); 
+			that.log(that.name, "received data from url:"+that.status_url, "state is currently", data.toString()); 
 			
 			if (that.outletService ) {
 				that.outletService.getCharacteristic(Characteristic.On)
