@@ -1,4 +1,4 @@
-# homebridge-http-advanced
+# homebridge-mystrom
 
 Supports myStrom (http://mystrom.ch) devices on the HomeBridge Platform and provides a real time polling for getting the "On" and power level characteristics to Homekit. Implements an "Outlet" service for HomeKit.
 
