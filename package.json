@@ -46,7 +46,7 @@
   "license": "ISC",
   "name": "homebridge-mystrom",
   "optionalDependencies": {},
-  "readme": "# homebridge-mystrom\n\nSupports myStrom (http://mystrom.ch) devices on the HomeBridge Platform and provides a real time polling for getting the "On" and power level characteristics to Homekit. Implements an \"Outlet\" service for HomeKit.",
+  "readme": "# homebridge-mystrom\n\nSupports myStrom (http://mystrom.ch) devices on the HomeBridge Platform and provides a real time polling for getting the \"On\" and power level characteristics to Homekit. Implements an \"Outlet\" service for HomeKit.",
   "readmeFilename": "README.md",
   "repository": {
     "type": "git",
