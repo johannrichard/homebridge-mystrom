@@ -6,21 +6,13 @@
         "pin": "031-45-154"
     },
     
-    "description": "HomeBridge HTTP Status Control",
+    "description": "HomeBridge myStrom Status Control",
 
-    "accessories": [ {
-	        "accessory": "HttpStatus",
-                "name": "Alfresco Lamp",
-		"switchHandling": "yes",
-				"http_method": "GET",
-				"on_url":      "http://localhost/controller/1700/ON",
-				"off_url":     "http://localhost/controller/1700/OFF",
-				"status_url":  "http://localhost/status/100059",
-		"service": "Light",
-				"brightnessHandling": "yes",
-				"brightness_url":     "http://localhost/controller/1707/%b",
-				"brightnesslvl_url":  "http://localhost/status/100054"			
-									    
-       } 
+    "accessories": [ 
+        {
+            "accessory": "myStrom",
+            "name": "myStrom WLAN Energy Control Switch",
+            "switch_address": "192.168.1.42"
+        } 
     ]
 }
