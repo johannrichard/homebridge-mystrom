@@ -35,7 +35,7 @@ Configuration sample:
     "description": "HomeBridge myStrom Status Control.",
     "platforms": [
         {
-            "authToken": "EF0IRZjqWEuSf2GH-X4Sb6b3wEQ1k6O7m",
+            "authToken": "0XBfQzVWRWuhNeFe-C5RWFCx9MjYjFvf2",
             "host": "mystrom.ch",
             "name": "myStrom Cloud",
             "platform": "myStromCloud",
