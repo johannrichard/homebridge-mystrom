@@ -63,3 +63,7 @@ You will get a response along the following lines, printed out on the command li
 ```
 
 Just copy the `"authToken":"0XBfQzVWRWuhNeFe-C5RWFCx9MjYjFvf2",` into your `config.json` file and you should be set for Go!
+
+# Homebridge as a `systemd` service under Linux
+
+In order to run homebridge as a service on Linux systems with [`systemd`](https://wiki.debian.org/systemd), you have to create the corresponding definitions. I've created [a gist](https://gist.github.com/johannrichard/0ad0de1feb6adb9eb61a) with some instructions on how to do this.
