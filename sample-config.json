@@ -1,18 +1,25 @@
 {
-     "bridge": {
-        "name": "HomeBridge",
-        "username": "CC:22:3D:E3:CE:30",
-        "port": 51826,
-        "pin": "031-45-154"
-    },
-    
-    "description": "HomeBridge myStrom Status Control",
-
-    "accessories": [ 
+    "accessories": [
         {
-            "accessory": "MyStrom",
+            "accessory": "myStrom",
             "name": "myStrom WLAN Energy Control Switch",
-            "switch_address": "192.168.1.42"
-        } 
+            "switch_address": "10.0.0.42"
+        }
+    ],
+    "bridge": {
+        "name": "myStrom HomeBridge",
+        "pin": "042-45-555",
+        "port": 51826,
+        "username": "CC:33:3D:E3:CE:42"
+    },
+    "description": "HomeBridge myStrom Status Control.",
+    "platforms": [
+        {
+            "platform": "myStromCloud",
+            "name": "myStrom Cloud",
+            "host": "mystrom.ch",
+            "type": "service",
+            "authToken": "0XBfQzVWRWuhNeFe-C5RWFCx9MjYjFvf2"
+        }
     ]
 }
