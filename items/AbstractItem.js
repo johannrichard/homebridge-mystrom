@@ -7,13 +7,14 @@ var AbstractItem = function(device, platform, homebridge) {
 	this.device = device;
 	this.homebridge = homebridge;
 
-	this.manufacturer = "myStrom AG";
-
 	// TODO: This might change depending on the deviceTypeName
+	this.manufacturer = "myStrom AG";
 	this.model = "myStrom WLAN Energy Control Switch";
 
 	this.label = this.device.deviceTypeName;
 	this.id = this.device.id;
+	this.serialNumber = this.id;
+
 	this.state = this.device.state;
 	this.log = this.platform.log;
 
