@@ -16,8 +16,15 @@ var AbstractItem = function(device, platform, homebridge) {
 	this.serialNumber = this.id;
 
 	this.state = this.device.state;
-	this.log = this.platform.log;
+	if(this.platform != null) {
+	    // We're in "platform" mode"
+    	this.log = this.platform.log;    
+	} else {
+	    // We're in "device" mode (i.e. most probably local)
+	    this.log = this.device.log;
+	}
 
+	this.localDevice = false;
 	this.setInitialState = false;
 	this.setFromMyStrom = false;
 	this.informationService = undefined;
@@ -25,10 +32,14 @@ var AbstractItem = function(device, platform, homebridge) {
 	this.listener = undefined;
 	this.pte = undefined;
 
-	this.name = this.device.name + " (" + this.label + ")";
+    // Add the label to the name if setting from myStrom Cloud
+    if(this.label) {
+    	this.name = this.device.name + " (" + this.label + ")";        
+    } else {
+        this.name = this.device.name;
+    }
 
 	AbstractItem.super_.call(this, this.name, homebridge.hap.uuid.generate(String(this.device.id)));
-
 };
 
 AbstractItem.prototype.getServices = function() {
@@ -59,7 +70,11 @@ AbstractItem.prototype.checkListener = function() {
 	if (typeof this.listener == 'undefined' || typeof this.pte == 'undefined') {
 		this.pte = undefined;
 		this.listener = new PollListener(this, this.updateCharacteristics.bind(this));
-		this.listener.startListener();
+		if (this.localDevice) {
+    		this.listener.startLocalListener();
+		} else {
+			this.listener.startCloudListener();
+		}
 	}
 };
 

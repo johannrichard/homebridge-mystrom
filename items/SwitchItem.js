@@ -5,7 +5,9 @@ var request = require("request");
 var SwitchItem = function(device, platform, homebridge) {
 	SwitchItem.super_.call(this, device, platform, homebridge);
 
-	this.url = this.platform.baseUrl + "/device";
+    if (this.platform) {
+    	this.url = this.platform.baseUrl + "/device";        
+    }
 };
 
 SwitchItem.prototype.getOtherServices = function() {

@@ -3,6 +3,7 @@ var exports = module.exports = {};
 exports.AbstractItem = require('../items/AbstractItem.js');
 exports.SwitchItem = require('../items/SwitchItem.js');
 exports.OutletItem = require('../items/OutletItem.js');
+exports.MyStromOutletItem = require('../items/MyStromOutletItem.js');
 
 exports.Factory = function(myStromPlatform, homebridge) {
 	this.platform = myStromPlatform;
@@ -26,7 +27,6 @@ exports.Factory.prototype.authenticateUser = function() {
 	return this.platform.authToken;
 };
 
-
 exports.Factory.prototype.parseSitemap = function(jsonDeviceMap) {
 	var accessoryList = [];
 	var self = this;
@@ -45,40 +45,4 @@ exports.Factory.prototype.parseSitemap = function(jsonDeviceMap) {
 	}
 
 	return accessoryList;
-};
-
-exports.Factory.prototype.checkCustomAttrs = function(widget, platform) {
-	widget.manufacturer = "OpenHAB";
-	widget.model = widget.type;
-	widget.itemType = widget.type;
-	widget.serialNumber = widget.name;
-	widget.skipItem = false;
-
-	//cicle customAttrs
-	if ('customAttrs' in platform) {
-		for (var key in platform.customAttrs) {
-			if (platform.customAttrs.hasOwnProperty(key) && platform.customAttrs[key]['itemName'] === widget.name) {
-				if (typeof platform.customAttrs[key]['itemLabel'] !== 'undefined') {
-					widget.label = platform.customAttrs[key]['itemLabel'];
-				}
-				if (typeof platform.customAttrs[key]['itemManufacturer'] !== 'undefined') {
-					widget.manufacturer = platform.customAttrs[key]['itemManufacturer'];
-				}
-				if (typeof platform.customAttrs[key]['itemSerialNumber'] !== 'undefined') {
-					widget.serialNumber = platform.customAttrs[key]['itemSerialNumber'];
-				}
-				if (typeof platform.customAttrs[key]['itemType'] !== 'undefined') {
-					widget.itemType = platform.customAttrs[key]['itemType'];
-					widget.model = widget.itemType;
-				}
-				if (typeof platform.customAttrs[key]['itemModel'] !== 'undefined') {
-					widget.model = platform.customAttrs[key]['itemModel'];
-				}
-				if (typeof platform.customAttrs[key]['skipItem'] !== 'undefined') {
-					widget.skipItem = platform.customAttrs[key]['skipItem'];
-				}
-			}
-		}
-	}
-	return widget;
 };
