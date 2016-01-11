@@ -7,12 +7,12 @@ var AbstractItem = function(device, platform, homebridge) {
 	this.device = device;
 	this.homebridge = homebridge;
 
-	// TODO: This might change depending on the deviceTypeName
-	this.manufacturer = "myStrom AG";
-	this.model = "myStrom WLAN Energy Control Switch";
-
 	this.label = this.device.deviceTypeName;
 	this.id = this.device.id;
+
+	// TODO: This might change depending on the deviceTypeName
+	this.manufacturer = "myStrom AG";
+	this.model = this.label;
 	this.serialNumber = this.id;
 
 	this.state = this.device.state;
@@ -32,12 +32,7 @@ var AbstractItem = function(device, platform, homebridge) {
 	this.listener = undefined;
 	this.pte = undefined;
 
-    // Add the label to the name if setting from myStrom Cloud
-    if(this.label) {
-    	this.name = this.device.name + " (" + this.label + ")";        
-    } else {
-        this.name = this.device.name;
-    }
+    this.name = this.device.name;
 
 	AbstractItem.super_.call(this, this.name, homebridge.hap.uuid.generate(String(this.device.id)));
 };
@@ -70,11 +65,7 @@ AbstractItem.prototype.checkListener = function() {
 	if (typeof this.listener == 'undefined' || typeof this.pte == 'undefined') {
 		this.pte = undefined;
 		this.listener = new PollListener(this, this.updateCharacteristics.bind(this));
-		if (this.localDevice) {
-    		this.listener.startLocalListener();
-		} else {
-			this.listener.startCloudListener();
-		}
+        this.listener.startListener();
 	}
 };
 

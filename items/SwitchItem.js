@@ -43,10 +43,12 @@ SwitchItem.prototype.getItemState = function(callback) {
 	this.checkListener();
 
 	this.log("Request power state from " + this.name);
-	request.post(this.url, {
-			form: {
-				"id": this.id,
-				"authToken": this.platform.authToken
+	request(this.url, {
+			qs: {
+				"id": this.id
+			},
+			headers: {
+			    "Auth-Token": this.platform.authToken
 			},
 			json: true
 		},
@@ -85,11 +87,13 @@ SwitchItem.prototype.setItemState = function(value, callback) {
 
 	this.log("Send message to " + this.name + ": " + value);
 	var command = value == 1 ? true : false;
-	request.post(this.url + "/switch", {
-			form: {
+	request(this.url + "/switch", {
+			qs: {
 				"id": this.id,
-				"authToken": this.platform.authToken,
 				"on": command
+			},
+			headers: {
+			    "Auth-Token": this.platform.authToken
 			},
 			json: true
 		},
