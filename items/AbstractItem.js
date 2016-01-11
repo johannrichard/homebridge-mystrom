@@ -7,16 +7,24 @@ var AbstractItem = function(device, platform, homebridge) {
 	this.device = device;
 	this.homebridge = homebridge;
 
-	this.manufacturer = "myStrom AG";
-
-	// TODO: This might change depending on the deviceTypeName
-	this.model = "myStrom WLAN Energy Control Switch";
-
 	this.label = this.device.deviceTypeName;
 	this.id = this.device.id;
-	this.state = this.device.state;
-	this.log = this.platform.log;
 
+	// TODO: This might change depending on the deviceTypeName
+	this.manufacturer = "myStrom AG";
+	this.model = this.label;
+	this.serialNumber = this.id;
+
+	this.state = this.device.state;
+	if(this.platform != null) {
+	    // We're in "platform" mode"
+    	this.log = this.platform.log;    
+	} else {
+	    // We're in "device" mode (i.e. most probably local)
+	    this.log = this.device.log;
+	}
+
+	this.localDevice = false;
 	this.setInitialState = false;
 	this.setFromMyStrom = false;
 	this.informationService = undefined;
@@ -24,10 +32,9 @@ var AbstractItem = function(device, platform, homebridge) {
 	this.listener = undefined;
 	this.pte = undefined;
 
-	this.name = this.device.name + " (" + this.label + ")";
+    this.name = this.device.name;
 
 	AbstractItem.super_.call(this, this.name, homebridge.hap.uuid.generate(String(this.device.id)));
-
 };
 
 AbstractItem.prototype.getServices = function() {
@@ -58,7 +65,7 @@ AbstractItem.prototype.checkListener = function() {
 	if (typeof this.listener == 'undefined' || typeof this.pte == 'undefined') {
 		this.pte = undefined;
 		this.listener = new PollListener(this, this.updateCharacteristics.bind(this));
-		this.listener.startListener();
+        this.listener.startListener();
 	}
 };
 

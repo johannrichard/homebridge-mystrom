@@ -17,14 +17,13 @@ module.exports = function(homebridge) {
 	Utility.addSupportTo(ItemFactory.AbstractItem, Accessory);
 	Utility.addSupportTo(ItemFactory.SwitchItem, ItemFactory.AbstractItem);
 	Utility.addSupportTo(ItemFactory.OutletItem, ItemFactory.SwitchItem);
+    Utility.addSupportTo(ItemFactory.MyStromOutletItem, ItemFactory.OutletItem);
 
-	homebridge.registerAccessory("homebridge-mystrom", "myStrom", myStromAccessory);
+    homebridge.registerAccessory("homebridge-mystrom", "myStrom", myStromAccessory);
 	homebridge.registerPlatform("homebridge-mystrom", "myStromCloud", myStromPlatform);
 }
 
-
 //////// PLATFORM /////////
-
 function myStromPlatform(log, config) {
 	this.log = log;
 	this.name = config["name"];
@@ -86,116 +85,20 @@ myStromPlatform.prototype.accessories = function(callback) {
 };
 
 ////////////// Accessory
-
 function myStromAccessory(log, config) {
 	this.log = log;
 
 	// Configuration
 	this.name = config["name"];
-
-	this.base_url = "http://" + config["switch_address"];
-	this.on_url = this.base_url + "/relay?state=1";
-	this.off_url = this.base_url + "/relay?state=0";
-	this.status_url = this.base_url + "/report";
-
-	this.state = false;
-	this.inUse = false;
-
-	var that = this;
-
-	var emitter = pollingtoevent(function(done) {
-		that.httpRequest(that.status_url, function(error, response, responseBody) {
-			if (error) {
-				that.log('HTTP get power function failed: %s', error.message);
-				callback(error);
-			} else {
-				done(null, responseBody);
-			}
-		})
-	}, {
-		longpolling: true,
-		interval: 2000
-	});
-
-	emitter.on("longpoll", function(data) {
-		var relay = JSON.parse(data)['relay'];
-		var power = JSON.parse(data)['power'];
-
-		that.state = relay;
-		that.inUse = power > 0;
-
-		if (that.outletService) {
-			that.outletService.getCharacteristic(Characteristic.On)
-				.setValue(that.state);
-			that.outletService.getCharacteristic(Characteristic.OutletInUse)
-				.setValue(that.inUse);
-		}
-	});
-}
-
-myStromAccessory.prototype = {
-
-	httpRequest: function(url, callback) {
-		request.get(url, function(error, response, body) {
-			callback(error, response, body)
-		})
-	},
-
-	setPowerState: function(powerOn, callback) {
-		var url;
-
-		if (!this.on_url || !this.off_url) {
-			this.log.warn("Ignoring request; No power url defined.");
-			callback(new Error("No power url defined."));
-			return;
-		}
-
-		if (powerOn) {
-			url = this.on_url;
-			this.log("Setting power state to on");
-		} else {
-			url = this.off_url;
-			this.log("Setting power state to off");
-		}
-
-		this.httpRequest(url, function(error, response, responseBody) {
-			if (error) {
-				this.log('HTTP set power function failed: %s', error.message);
-				callback(error);
-			} else {
-				this.log('HTTP set power function succeeded!');
-				callback();
-			}
-		}.bind(this));
-	},
-
-	identify: function(callback) {
-		this.log("Identify requested!");
-		callback(); // success
-	},
-
-	getServices: function() {
-		var that = this;
-		// you can OPTIONALLY create an information service if you wish to override
-		// the default values for things like serial number, model, etc.
-		var informationService = new Service.AccessoryInformation();
-
-		informationService
-			.setCharacteristic(Characteristic.Manufacturer, "myStrom AG")
-			.setCharacteristic(Characteristic.Model, "myStrom WLAN Energy Control Switch")
-			.setCharacteristic(Characteristic.SerialNumber, "HTTP Serial Number");
-
-		this.outletService = new Service.Outlet(this.name);
-		this.outletService
-			.getCharacteristic(Characteristic.On)
-			.on('get', function(callback) {
-				callback(null, that.state)
-			})
-			.on('set', this.setPowerState.bind(this));
-		this.outletService.getCharacteristic(Characteristic.OutletInUse)
-			.on('get', function(callback) {
-				callback(null, that.inUse)
-			});
-		return [informationService, this.outletService];
+	if(typeof config["switch_address"] == 'undefined') {
+	    throw new Error("No 'switch_address' configured for " + this.name);
 	}
-};
+
+	this.device = {};
+	this.device.name = config["name"] || "myStrom WLAN Energy Control Switch";
+	this.device.url = "http://" + config["switch_address"];
+	this.device.log = this.log;
+    
+    // There might be a more elegant way	
+	return new ItemFactory.MyStromOutletItem(this.device, null, Homebridge);
+}

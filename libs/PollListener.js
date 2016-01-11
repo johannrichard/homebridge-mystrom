@@ -10,16 +10,25 @@ var PollListener = function(item, callback) {
 
 PollListener.prototype.startListener = function() {
 	var self = this;
+    var options = {};
+
+    // Set options if needed (Authentication and device ID for cloud devices)
+    if (!this.item.localDevice) {
+        options = {
+                    qs: {
+                        "id": self.item.id
+                    },
+                    headers: {
+                        "Auth-Token": this.item.platform.authToken
+                    }
+                };
+    }
+
+    options.json = true;
 
 	if (typeof this.item.pte == 'undefined') {
 		this.item.pte = pte(function(done) {
-			request.post(self.item.url, {
-					form: {
-						"id": self.item.id,
-						"authToken": self.item.platform.authToken
-					},
-					json: true
-				},
+			request(self.item.url, options,
 				function(error, response, json) {
 					if (!error && response.statusCode == 200) {
 						if (json.status == "error") {
