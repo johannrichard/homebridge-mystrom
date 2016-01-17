@@ -49,8 +49,6 @@ function myStromPlatform(log, config) {
 
 	this.host = config["host"] || "mystrom.ch";
 	this.protocol = "https";
-
-	this.log("Auth information: " + this.authToken);
 }
 
 myStromPlatform.prototype.accessories = function(callback) {
