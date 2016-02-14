@@ -1,6 +1,7 @@
 "use strict";
 
 var request = require("request");
+var util = require("util");
 
 var MyStromOutletItem = function(device, platform, homebridge) {
 	MyStromOutletItem.super_.call(this, device, platform, homebridge);
@@ -78,5 +79,31 @@ MyStromOutletItem.prototype.setItemState = function(powerOn, callback) {
 			callback();
 		});
 }
+
+MyStromOutletItem.prototype.updateCharacteristics = function(message) {
+
+	this.log("Update characteristics of " + this.name);
+	if (typeof message != 'undefined' && typeof message.relay != 'undefined') {
+		// Only update if data is really available
+		this.log("Message: " + util.inspect(message));
+		this.setFromMyStrom = true;
+		this.otherService
+			.getCharacteristic(this.homebridge.hap.Characteristic.On)
+			.setValue(message.relay,
+				function() {
+					this.setFromMyStrom = false;
+				}.bind(this)
+		);
+
+		this.otherService
+			.getCharacteristic(this.homebridge.hap.Characteristic.OutletInUse)
+			.setValue(message.power > 0,
+				function() {
+					this.setFromMyStrom = false;
+				}.bind(this)
+		);
+	}
+
+};
 
 module.exports = MyStromOutletItem;
