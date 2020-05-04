@@ -1,38 +1,13 @@
 {
-  "_args": [
-    [
-      ".",
-      ""
-    ]
-  ],
-  "_from": "lib/node_modules/homebridge-mystrom",
-  "_inCache": true,
-  "_installable": true,
-  "_location": "/homebridge-mystrom",
-  "_phantomChildren": {},
-  "_requested": {
-    "name": null,
-    "raw": ".",
-    "rawSpec": ".",
-    "scope": null,
-    "spec": "/root/.nvm/versions/node/v0.12.7/lib/node_modules/homebridge-mystrom",
-    "type": "directory"
-  },
-  "_requiredBy": [
-    "#USER"
-  ],
-  "_resolved": "file:lib/node_modules/mystrom",
-  "_shasum": "818d9b3eac646c7d4ea7004b189da32349c0d574",
-  "_shrinkwrap": null,
-  "_spec": ".",
-  "_where": "",
+  "name": "homebridge-mystrom",
+  "displayName": "Homebridge myStrom Switch Plugin",
   "author": "johannrichard",
+  "description": "myStrom (http://mystrom.ch) polling plugin for homebridge: https://github.com/johannrichard/homebridge-mystrom",
   "dependencies": {
     "request": "^2.65.0",
     "request-debug": "^0.2.0",
     "polling-to-event": ">=2.0.2"
   },
-  "description": "myStrom (http://mystrom.ch) polling plugin for homebridge: https://github.com/johannrichard/homebridge-mystrom",
   "devDependencies": {},
   "engines": {
     "homebridge": ">=0.2.0",
@@ -44,7 +19,6 @@
     "energy-control-switch"
   ],
   "license": "ISC",
-  "name": "homebridge-mystrom",
   "optionalDependencies": {},
   "repository": {
     "type": "git",
