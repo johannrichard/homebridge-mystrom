@@ -1,5 +1,7 @@
 # homebridge-mystrom
 
+![Node.js Package](https://github.com/johannrichard/homebridge-mystrom/workflows/Node.js%20Package/badge.svg)
+
 Supports myStrom (http://mystrom.ch) devices on the HomeBridge Platform and provides a real time polling for getting the "On" and power level characteristics to Homekit. Implements an "Outlet" service for HomeKit.
 
 The current version of the plugin supports two different modes
