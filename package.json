@@ -16,7 +16,9 @@
   "keywords": [
     "homebridge-plugin",
     "mystrom",
-    "energy-control-switch"
+    "energy-control-switch",
+    "homebridge",
+    "homekit"
   ],
   "license": "ISC",
   "optionalDependencies": {},
