@@ -6,12 +6,19 @@ var util = require("util");
 var MyStromOutletItem = function(device, platform, homebridge) {
 	MyStromOutletItem.super_.call(this, device, platform, homebridge);
 
-    this.baseUrl = this.device.url;
+  this.baseUrl = this.device.url;
 	this.onUrl = this.baseUrl + "/relay?state=1";
 	this.offUrl = this.baseUrl + "/relay?state=0";
 	this.statusUrl = this.baseUrl + "/report";
 	this.url = this.statusUrl; // FIXME: Consolidate
 	this.localDevice = true;
+  if(this.device.token != "") {
+    this.headers = {
+      "Token": this.device.token
+    }
+  } else {
+    this.headers = {}
+  }
 };
 
 // TODO: Implement specifics of "local" outlets
@@ -22,7 +29,10 @@ MyStromOutletItem.prototype.getItemState = function(callback) {
     // TODO: Update "inUse"
 	this.log("Request power state from " + this.name);
 	request(this.statusUrl, 
-	    { json: true },
+	    {
+        headers: this.headers,
+        json: true
+      },
 		function(error, response, json) {
 			if (!error && response.statusCode == 200) {
 				self.log("Response from " + self.name + ": 200 OK");
@@ -68,7 +78,10 @@ MyStromOutletItem.prototype.setItemState = function(powerOn, callback) {
 	}
 
 	request(url, 
-	    { json: true },
+    {
+      headers: this.headers,
+      json: true
+    },
 		function(error, response, json) {
 			if (!error && response.statusCode == 200) {
 				self.log("Response from " + self.name + ": 200 OK");

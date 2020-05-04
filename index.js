@@ -95,6 +95,11 @@ function myStromAccessory(log, config) {
 	this.device = {};
 	this.device.name = config["name"] || "myStrom WLAN Energy Control Switch";
 	this.device.url = "http://" + config["switch_address"];
+  if(typeof config["auth_token"] != 'undefined') {
+    this.device.token = config["auth_token"];
+  } else {
+    this.device.token = "";
+  }
 	this.device.log = this.log;
     
     // There might be a more elegant way	
