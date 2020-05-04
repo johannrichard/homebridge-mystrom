@@ -3,7 +3,8 @@
         {
             "accessory": "myStrom",
             "name": "myStrom WLAN Energy Control Switch",
-            "switch_address": "10.0.0.42"
+            "switch_address": "10.0.0.42",
+            "auth_token": "00112233445566778899AABBCCDDEEFF"
         }
     ],
     "bridge": {

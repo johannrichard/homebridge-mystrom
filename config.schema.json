@@ -1,0 +1,27 @@
+{
+  "pluginAlias": "myStrom",
+  "pluginType": "accessory",
+  "schema": {
+    "type": "object",
+    "required": [
+            "name",
+            "switch_address"
+        ],
+    "properties": {
+      "name": {
+        "title": "Name",
+        "type": "string"
+      },
+      "switch_address": {
+        "title": "IP Address / Hostname",
+        "type": "string",
+        "format": "hostname"
+      },
+      "auth_token": {
+        "title": "REST API Token",
+        "description": "If you have set a Token to protect the REST API, enter it here.",
+        "type": "string"
+      }
+    }
+  }
+}

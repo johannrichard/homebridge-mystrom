@@ -93,7 +93,7 @@ SwitchItem.prototype.setItemState = function(value, callback) {
 				"on": command
 			},
 			headers: {
-			    "Auth-Token": this.platform.authToken
+        "Auth-Token": this.platform.authToken
 			},
 			json: true
 		},

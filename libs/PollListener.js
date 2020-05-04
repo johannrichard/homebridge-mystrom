@@ -22,6 +22,15 @@ PollListener.prototype.startListener = function() {
                         "Auth-Token": this.item.platform.authToken
                     }
                 };
+    } else {
+      // Local Device, use Token if set
+      if(this.item.device.token != ""){
+        options = {
+          headers: {
+            "Token": this.item.device.token
+          }
+        }
+      }
     }
 
     options.json = true;
