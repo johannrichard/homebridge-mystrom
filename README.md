@@ -25,7 +25,8 @@ Configuration sample:
         {
             "accessory": "myStrom",
             "name": "myStrom WLAN Energy Control Switch",
-            "switch_address": "10.0.0.42"
+            "switch_address": "10.0.0.42",
+            "auth_token": "0011223344556677889AABBCCDDEEFF"
         }
     ],
     "bridge": {
@@ -49,8 +50,22 @@ Configuration sample:
 
 ```
 
+# myStrom local Auth Token
+If you have set a local authentication token on your myStrom WiFi Switches, you must specify it in the definition of the accessory with `auth_token`:
+
+```json
+    "accessories": [
+        {
+            "accessory": "myStrom",
+            "name": "myStrom WLAN Energy Control Switch",
+            "switch_address": "10.0.0.42",
+            "auth_token": "0011223344556677889AABBCCDDEEFF"
+        }
+    ]
+```
+
 # myStrom Cloud Authentication
-IF you want to use the myStrom Cloud platform, you have to retrieve an authentication token. The easiest way under Linux / Mac OS X is via curl:
+If you want to use the myStrom Cloud platform, you have to retrieve an authentication token. The easiest way under Linux / Mac OS X is via curl:
 
 `curl -X POST -d 'email=<your-email>&password=<yourpassword>' https://mystrom.ch/mobile/auth`
 
@@ -69,3 +84,6 @@ Just copy the `"authToken":"0XBfQzVWRWuhNeFe-C5RWFCx9MjYjFvf2",` into your `conf
 # Homebridge as a `systemd` service under Linux
 
 In order to run homebridge as a service on Linux systems with [`systemd`](https://wiki.debian.org/systemd), you have to create the corresponding definitions. I've created [a gist](https://gist.github.com/johannrichard/0ad0de1feb6adb9eb61a) with some instructions on how to do this.
+
+# Config UI X 
+The myStrom Plugin has basic support for [Config UI X](https://github.com/oznu/homebridge-config-ui-x), a Homebridge Web UI plugin to monitor, manage and control Homebridge from a browser. When you add the plugin to your Config UI X installation, you can add one or several myStrom Switches via the plugin's settings.
