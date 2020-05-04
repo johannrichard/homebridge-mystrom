@@ -6,7 +6,7 @@ Supports myStrom (http://mystrom.ch) devices on the HomeBridge Platform and prov
 
 The current version of the plugin supports two different modes
 
-* Individual accessories: These are configured as local devides (i.e. not external network connection required), with the help of the Switch API (https://mystrom.ch/en/mystrom-api)
+* Individual accessories: These are configured as local devides (i.e. not external network connection required), with the help of the Switch API (https://api.mystrom.ch/?version=latest)
 * myStrom Cloud platform: This mode uses information retrieved from the myStrom Cloud service to create all registered accessories under your myStrom account in HomeKit. You need an authentication key that you have to generate yourself (See below). This mode uses the myStrom Mobile API (https://mystrom.ch/mobile) and might break in the future. 
 
 # Installation
