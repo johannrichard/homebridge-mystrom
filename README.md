@@ -17,7 +17,7 @@ The current version of the plugin supports two different modes
 
 # Configuration
 
-Configuration sample:
+Configuration sample (you either need the `accessories` block with individual switches (recommended) or the `platforms` block for the Cloud connection):
 
  ```json
 {
